@@ -33,17 +33,31 @@ print(f"Number of times bob occurs is: {counter}")
 ```
 
 ## Problema 3
-Para resolver el problema de encontrar la subcadena más larga en orden alfabético dentro de una cadena de caracteres en minúsculas, puedes seguir estos pasos en Python:
 
-1. Inicializa dos variables: una para almacenar la subcadena más larga encontrada (longest) y otra para la subcadena actual que estás evaluando (current). Ambas pueden comenzar con el primer carácter de la cadena dada s.
-2. Recorre cada carácter de la cadena s empezando desde el segundo carácter.
-3. Para cada carácter en s, compara si es alfabéticamente mayor o igual al último carácter de la subcadena current.
-    - Si es mayor o igual, añádelo a current ya que sigue el orden alfabético.
-    - Si no, significa que la secuencia alfabética actual ha terminado. Entonces, compara la longitud de current con longest para ver si necesitas actualizar longest.
-4. Si current es más larga, actualiza longest con current.
+Suponga que s es una cadena de caracteres en minúsculas.
 
-5. Si el carácter actual no sigue el orden alfabético (es decir, es menor que el último carácter de current), reinicia current con el carácter actual, ya que comienzas a construir una nueva subcadena desde ese carácter.
-6. Continúa este proceso hasta que hayas recorrido todos los caracteres de s.
-7. Al final del bucle, longest contendrá la subcadena más larga en orden alfabético. Imprime o devuelve esta subcadena.
+Escriba un programa que imprima la subcadena más larga de s en la que las letras aparezcan en orden alfabético. Por ejemplo, si s = 'azcbobobegghakl', entonces su programa debe imprimir
 
-Este método asegura que encuentres la subcadena más larga en orden alfabético y, en caso de empates, se selecciona la primera subcadena encontrada, siguiendo las instrucciones del problema.
+*La subcadena más larga en orden alfabético es: beggh*
+
+En caso de empates, imprima la primera subcadena. Por ejemplo, si s = 'abcbcd', entonces su programa debe imprimir
+
+*La subcadena más larga en orden alfabético es: abc*
+
+
+```{python}
+s = 'abcbcd'
+
+longest = s[0]
+current = s[0]
+
+for i in range(1, len(s)):
+    if s[i] >= current[-1]:
+        current += s[i]
+        if len(current) > len(longest):
+            longest = current
+    else:
+        current = s[i]
+longest
+
+```
