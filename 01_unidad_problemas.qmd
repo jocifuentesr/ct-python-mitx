@@ -1,0 +1,49 @@
+# Problemas primera unidad
+## Problema 01 
+Suponga que s es una cadena de caracteres en minúsculas.
+
+Escriba un programa que cuente el número de vocales contenidas en la cadena s. Las vocales válidas son: 'a', 'e', 'i', 'o' y 'u'. Por ejemplo, si s = 'azcbobobegghakl', su programa debe imprimir:
+
+Número de vocales: 5
+
+```{python}
+s = 'azcbobobegghakl'
+num_vowels = 0
+for char in s:
+    if char in 'aeiou':
+        num_vowels += 1
+
+print(f"Number of vowels: {num_vowels}")
+```
+
+## Problema 2
+Suponga que s es una cadena de caracteres en minúsculas.
+
+Escriba un programa que imprima el número de veces que la cadena 'bob' aparece en s. Por ejemplo, si s = 'azcbobobegghakl', entonces su programa debe imprimir:
+
+El número de veces que aparece bob es: 2
+
+```{python}
+s = 'azcbobobegghakl'
+counter = 0
+for i in range(len(s) - 2):
+    if s[i:i+3] == 'bob':
+        counter += 1
+print(f"Number of times bob occurs is: {counter}")
+```
+
+## Problema 3
+Para resolver el problema de encontrar la subcadena más larga en orden alfabético dentro de una cadena de caracteres en minúsculas, puedes seguir estos pasos en Python:
+
+1. Inicializa dos variables: una para almacenar la subcadena más larga encontrada (longest) y otra para la subcadena actual que estás evaluando (current). Ambas pueden comenzar con el primer carácter de la cadena dada s.
+2. Recorre cada carácter de la cadena s empezando desde el segundo carácter.
+3. Para cada carácter en s, compara si es alfabéticamente mayor o igual al último carácter de la subcadena current.
+    - Si es mayor o igual, añádelo a current ya que sigue el orden alfabético.
+    - Si no, significa que la secuencia alfabética actual ha terminado. Entonces, compara la longitud de current con longest para ver si necesitas actualizar longest.
+4. Si current es más larga, actualiza longest con current.
+
+5. Si el carácter actual no sigue el orden alfabético (es decir, es menor que el último carácter de current), reinicia current con el carácter actual, ya que comienzas a construir una nueva subcadena desde ese carácter.
+6. Continúa este proceso hasta que hayas recorrido todos los caracteres de s.
+7. Al final del bucle, longest contendrá la subcadena más larga en orden alfabético. Imprime o devuelve esta subcadena.
+
+Este método asegura que encuentres la subcadena más larga en orden alfabético y, en caso de empates, se selecciona la primera subcadena encontrada, siguiendo las instrucciones del problema.
