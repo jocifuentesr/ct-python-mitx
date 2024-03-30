@@ -1,0 +1,456 @@
+---
+format: pdf
+toc: true
+---
+
+# Introduction to CS and Programming using Python
+Many Sample Exam Questions
+
+Es una transcripción del examen de ejemplo que se puede encontrar en el siguiente [enlace](https://introcomp.mit.edu/6.100A_ase/MQs/1_MQ1) 
+
+## Question 1 
+
+Which of the following are True? Check all that apply.
+
+- [ ] 1-1. Suppose `x = "pi"` and `y = "pie"`. The line of code `x, y = y, x` will swap the values of `x` and `y`, resulting in `x = "pie"` and `y = "pi"`.
+
+- [ ] 1-2. Suppose `x` is an integer in the following code:
+```python
+def f(x):
+    while x > 3:
+        f(x+1)
+```
+For any value of `x`, all calls to `f` are guaranteed to never terminate.
+
+- [ ] 1-3. A Python program always executes every line of code written at least once.
+
+- [ ] 1-4. Suppose you have two different functions that each assign a variable called `x`. Modifying `x` in one function means you always modify `x` in the other function for any `x`.
+
+- [ ] 1-51. The following code will enter an infinite loop for all values of `i` and `j`.
+```python
+while i >= 0:
+    while j >= 0:
+        print(i, j)
+```
+
+- [ ] 1-6. It is always possible and feasible for a programmer to come up with test cases that run through every possible path in a program.
+
+- [ ] 1-7. Assume `f()` is defined. In the statement `a = f()`, `a` is always a function.
+
+- [ ] 1-8. A program that keeps running and does not stop is an example of a syntax error.
+
+- [ ] 1-9. Consider the following function.
+```python
+def f(x):
+    a = []
+    while x > 0:
+        a.append(x)
+        f(x-1)
+```
+A new object of type list is created for each recursive invocation of `f`.
+
+- [ ] 1-10. A tuple can contain a list as an element.
+
+- [ ] 1-11. In the statement `L = [1,2,3]`, `L` is a class.
+
+- [ ] 1-12. The orders of growth of Θ(n^2+1) and Θ(n^5+1) are both polynomial.
+
+- [ ] 1-13. The complexity of binary search on a sorted list of n items is Θ(log n).
+
+- [ ] 1-14. A bisection search algorithm always returns the correct answer when searching for an element in a sorted list.
+
+- [ ] 1-15. Performing binary search on an unsorted list will always return the correct answer in Θ(n) time where n is the length of the list.
+
+\newpage
+
+## Question 2
+
+Consider the function f below. What is its Big Θ complexity?
+
+```python
+def f(n):
+    def g(m):
+        m = 0
+        for i in range(m):
+            print(m)
+    for i in range(n):
+        g(n)
+```
+
+2-1. Θ(1)
+
+2-2. Θ(log(n))
+
+2-3. Θ(n)
+
+2-4. Θ(n^2)
+
+\newpage
+
+## Question 3
+Consider the following two functions and select the correct choice below.
+
+```python
+def foo_one(n):
+    """ Assume n is an int >= 0 """
+    answer = 1.0
+    while n > 1:
+        answer *= n
+        n -= 1
+    return answer
+
+def foo_two(n):
+    """ Assume n is an int >= 0 """
+    if n <= 1: 
+        return 1.0
+    else: 
+        return n*foo_two(n-1)
+```
+
+3-1. The worst case Big Θ time complexity of `foo_one` is worse than the worst case Big Θ time complexity of `foo_two`.
+
+3-2. The worst case Big Θ time complexity of `foo_two` is worse than the worst case Big Θ time complexity of `foo_one`.
+
+3-3. The worst case Big Θ time complexity of `foo_one` and `foo_two` are the same.
+
+3-4. Impossible to compare the worst case Big Θ time complexities of the two functions.
+
+
+\newpage
+## Question 4
+Numbers in Mandarin follow 3 simple rules.
+
+- There are words for each of the digits from 0 to 10.
+- For numbers 11-19, the number is pronounced as "ten digit", so for example, 16 would be pronounced (using Mandarin) as "ten six".
+- For numbers between 20 and 99, the number is pronounced as "digit ten digit", so for example, 37 would be pronounced (using Mandarin) as "three ten seven". If the digit is a zero, it is not included.
+
+Here is a simple Python dictionary that captures the numbers between 0 and 10.
+
+```python
+trans = {'0':'ling', '1':'yi', '2':'er', '3':'san', '4': 'si', '5':'wu', '6':'liu', '7':'qi', '8':'ba', '9':'jiu', '10': 'shi'}
+```
+
+We want to write a procedure that converts an American number (between 0 and 99), written as a string, into the equivalent Mandarin.
+
+```python
+def convert_to_mandarin(us_num):
+    """ 
+    us_num, a string representing a US number 0 to 99
+    Returns the string mandarin representation of us_num
+    """
+    # your code here
+
+# Example Usage
+convert_to_mandarin('36') will return san shi liu
+convert_to_mandarin('20') will return er shi
+convert_to_mandarin('16') will return shi liu
+```
+
+\newpage
+
+## Question 5
+You are given the following definitions:
+
+- A run of monotonically increasing numbers means that a number at position k+1 in the sequence is greater than or equal to the number at position k in the sequence.
+- A run of monotonically decreasing numbers means that a number at position k+1 in the sequence is less than or equal to the number at position k in the sequence.
+
+Implement a function that meets the specifications below.
+
+```python
+def longest_run(L):
+    """
+    Assumes L is a list of integers containing at least 2 elements.
+    Finds the longest run of numbers in L, where the longest run can
+    either be monotonically increasing or monotonically decreasing. 
+    In case of a tie for the longest run, choose the longest run 
+    that occurs first.
+    Does not modify the list.
+    Returns the sum of the longest run. 
+    """
+    # Your code here
+```
+
+For example:
+- If `L = [10, 4, 3, 8, 3, 4, 5, 7, 7, 2]` then the longest run of monotonically increasing numbers in L is `[3, 4, 5, 7, 7]` and the longest run of monotonically decreasing numbers in L is `[10, 4, 3]`. Your function should return the value 26 because the longest run of monotonically increasing integers is longer than the longest run of monotonically decreasing numbers.
+- If `L = [5, 4, 10]` then the longest run of monotonically increasing numbers in L is `[4, 10]` and the longest run of monotonically decreasing numbers in L is `[5, 4]`. Your function should return the value 9 because the longest run of monotonically decreasing integers occurs before the longest run of monotonically increasing numbers.
+
+\newpage
+
+## Question 6
+Write a function that meets the specifications below. For example, `general_poly([1, 2, 3, 4])(10)` should evaluate to 1234 because 1*10^3 + 2*10^2 + 3*10^1 + 4*10^0. So in the example the function only takes one argument with `general_poly([1, 2, 3, 4])` and it returns a function that you can apply to a value, in this case `x = 10` with `general_poly([1, 2, 3, 4])(10)`.
+
+```python
+def general_poly(L):
+    """ 
+    L, a list of numbers (n0, n1, n2, ... nk)
+    Returns a function, which when applied to a value x, returns the value 
+    n0 * x^k + n1 * x^(k-1) + ... nk * x^0
+    """
+    #YOUR CODE HERE
+```
+
+\newpage
+
+## Question 7
+Implement a function that meets the specifications below.
+
+```python
+def closest_power(base, num):
+    """ 
+    base: base of the exponential, integer > 1
+    num: number you want to be closest to, integer > 0
+    Find the integer exponent such that base^exponent is closest to num.
+    Note that the base^exponent may be either greater or smaller than num.
+    In case of a tie, return the smaller value.
+    Returns the exponent.
+    """
+    # Your code here
+
+# For example,
+closest_power(3,12) returns 2
+closest_power(4,12) returns 2
+closest_power(4,1) returns 0
+```
+\newpage
+
+## Question 8
+Implement a function that meets the specifications below.
+
+```python
+def deep_reverse(L):
+    """ 
+    assumes L is a list of lists whose elements are ints
+    Mutates L such that it reverses its elements and also 
+    reverses the order of the int elements in every element of L. 
+    It does not return anything.
+    """
+    # Your code here
+
+# For example:
+L = [[1, 2], [3, 4], [5, 6, 7]]
+deep_reverse(L)
+print(L)  # prints [[7, 6, 5], [4, 3], [2, 1]]
+```
+
+\newpage
+
+## Question 9
+Assume you are given two dictionaries `d1` and `d2`, each with integer keys and integer values. You are also given a function `f`, that takes in two integers, performs an unknown operation on them, and returns a value. Write a function called `dict_interdiff` that takes in two dictionaries (`d1` and `d2`). The function will return a tuple of two dictionaries: a dictionary of the intersect of `d1` and `d2` and a dictionary of the difference of `d1` and `d2`, calculated as follows:
+
+- intersect: The keys to the intersect dictionary are keys that are common in both `d1` and `d2`. To get the values of the intersect dictionary, look at the common keys in `d1` and `d2` and apply the function `f` to these keys' values -- the value of the common key in `d1` is the first parameter to the function and the value of the common key in `d2` is the second parameter to the function. Do not implement `f` inside your `dict_interdiff` code -- assume it is defined outside.
+- difference: a key-value pair in the difference dictionary is (a) every key-value pair in `d1` whose key appears only in `d1` and not in `d2` or (b) every key-value pair in `d2` whose key appears only in `d2` and not in `d1`.
+
+Here are two examples:
+
+- If `f(a, b)` returns `a + b`  
+`d1 = {1:30, 2:20, 3:30, 5:80}`  
+`d2 = {1:40, 2:50, 3:60, 4:70, 6:90}`  
+then `dict_interdiff(d1, d2)` returns `({1: 70, 2: 70, 3: 90}, {4: 70, 5: 80, 6: 90})`
+- If `f(a, b)` returns `a > b`  
+`d1 = {1:30, 2:20, 3:30}`  
+`d2 = {1:40, 2:50, 3:60}`  
+then `dict_interdiff(d1, d2)` returns `({1: False, 2: False, 3: False}, {})`
+
+```python
+def dict_interdiff(d1, d2):
+    """
+    d1, d2: dicts whose keys and values are integers
+    Returns a tuple of dictionaries according to the instructions above
+    """
+```
+
+\newpage
+
+## Question 10
+Write a function that meets the following specifications.
+
+```python
+def applyF_filterG(L, f, g):
+    """
+    Assumes L is a list of integers
+    Assume functions f and g are defined for you. 
+    f takes in an integer, applies a function, returns another integer 
+    g takes in an integer, applies a Boolean function, 
+        returns either True or False
+    Mutates L such that, for each element i originally in L, L contains  
+        i if g(f(i)) returns True, and no other elements
+    Returns the largest element in the mutated L or -1 if the list is empty
+    """
+    # Your code here
+```
+
+For example:
+```python
+def f(i):
+    return i + 2
+def g(i):
+    return i > 5
+L = [0, -10, 5, 6, -4]
+print(applyF_filterG(L, f, g))  # prints 6
+print(L) # prints [5, 6]
+```
+
+\newpage
+
+
+## Question 11
+Write a function to flatten a list. The list contains other lists, strings, or ints. For example, `[[1,'a',['cat'],2],[[[3]],'dog'],4,5]` is flattened into `[1,'a','cat',2,3,'dog',4,5]` (order matters).
+
+```python
+def flatten(aList):
+    """ 
+    aList: a list 
+    Returns a copy of aList, which is a flattened version of aList
+    """
+```
+
+\newpage
+
+## Question 12
+Write a class `USResident` that meets the following specifications.
+
+```python
+## DO NOT MODIFY THE IMPLEMENTATION OF THE Person CLASS ##
+class Person(object):
+    def __init__(self, name):
+        #create a person with name name
+        self.name = name
+        try:
+            firstBlank = name.rindex(' ')
+            self.lastName = name[firstBlank+1:]
+        except:
+            self.lastName = name
+        self.age = None
+    def getLastName(self):
+        #return self's last name
+        return self.lastName
+    def setAge(self, age):
+        #assumes age is an int greater than 0
+        #sets self's age to age (in years)
+        self.age = age
+    def getAge(self):
+        #assumes that self's age has been set
+        #returns self's current age in years
+        if self.age == None:
+            raise ValueError
+        return self.age
+    def __lt__(self, other):
+        #return True if self's name is lexicographically less
+        #than other's name, and False otherwise
+        if self.lastName == other.lastName:
+            return self.name < other.name
+        return self.lastName < other.lastName
+    def __str__(self):
+        #return self's name
+        return self.name
+        
+class USResident(Person):
+    """ 
+    A Person who resides in the US.
+    """
+    def __init__(self, name, status):
+        """ 
+        Initializes a Person object. A USResident object inherits 
+        from Person and has one additional attribute:
+        status: a string, one of "citizen", "legal_resident", "illegal_resident"
+        Raises a ValueError if status is not one of those 3 strings
+        """
+        # Write your code here
+        
+    def getStatus(self):
+        """
+        Returns the status
+        """
+        # Write your code here
+
+# For example:
+a = USResident('Tim Beaver', 'citizen')
+print(a.getStatus())    # prints citizen
+b = USResident('Tim Horton', 'non-resident')  # will show that a ValueError was raised
+```
+\newpage
+
+## Question 13 
+### Part 1
+Consider the following hierarchy of classes:
+
+```python
+class Person(object):     
+    def __init__(self, name):         
+        self.name = name     
+    def say(self, stuff):         
+        return self.name + ' says: ' + stuff     
+    def __str__(self):         
+        return self.name  
+
+class Lecturer(Person):     
+    def lecture(self, stuff):         
+        return 'I believe that ' + Person.say(self, stuff)  
+
+class Professor(Lecturer): 
+    def say(self, stuff): 
+        return self.name + ' says: ' + self.lecture(stuff)
+
+class ArrogantProfessor(Professor): 
+    def say(self, stuff): 
+        return 'It is obvious that ' + self.say(stuff)
+```
+
+As written, this code leads to an infinite loop when using the Arrogant Professor class. Change the definition of `ArrogantProfessor` so that the following behavior is achieved:
+
+```python
+e = Person('eric') 
+le = Lecturer('eric') 
+pe = Professor('eric') 
+ae = ArrogantProfessor('eric')
+
+>>> e.say('the sky is blue')
+eric says: the sky is blue
+
+>>> le.say('the sky is blue')
+eric says: the sky is blue
+
+>>> le.lecture('the sky is blue')
+I believe that eric says: the sky is blue
+
+>>> pe.say('the sky is blue')
+eric says: I believe that eric says: the sky is blue
+
+>>> pe.lecture('the sky is blue')
+I believe that eric says: the sky is blue
+
+>>> ae.say('the sky is blue')
+eric says: It is obvious that eric says: the sky is blue
+
+>>> ae.lecture('the sky is blue')
+It is obvious that eric says: the sky is blue
+```
+
+Paste ONLY `ArrogantProfessor` in the box.
+
+## Question 13 
+### Part 2
+You change your mind, and now want the behavior as described in Part 1, except that you want:
+
+```python
+>>> ae.say('the sky is blue')
+eric says: It is obvious that I believe that eric says: the sky is blue
+
+>>> ae.lecture('the sky is blue')
+It is obvious that I believe that eric says: the sky is blue
+```
+
+Change the definition of `ArrogantProfessor` so that the behavior described above is achieved. Paste ONLY `ArrogantProfessor` in the box.
+
+## Question 13 Part 3
+You change your mind once more. You want to keep the behavior from Part 2, but now you would like:
+
+```python
+>>> pe.say('the sky is blue')
+Prof. eric says: I believe that eric says: the sky is blue 
+
+>>> ae.say('the sky is blue')
+Prof. eric says: It is obvious that I believe that eric says: the sky is blue 
+```
+
+Change the `Professor` class definition in order to achieve this. You may have to modify your implmentation for a previous part to get this to work. Paste ONLY the `Professor` class in the box below.
