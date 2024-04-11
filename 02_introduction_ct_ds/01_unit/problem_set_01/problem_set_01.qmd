@@ -1,0 +1,145 @@
+---
+format:
+   html:
+      toc: true
+   pdf:
+    engine: typst
+    papersize: letter
+---
+
+# Transporte de Vacas Espaciales
+
+## Introducción
+
+En este apunte, exploraremos el problema de transportar vacas espaciales de regreso a su planeta de origen utilizando algoritmos en Python. Los alienígenas Aucks han logrado criar vacas mutantes con pesos enteros y desean llevarlas de vuelta a su planeta Aurock. Sin embargo, su nave espacial tiene un límite de peso y desean minimizar la cantidad de viajes que deben realizar a través del universo.
+
+## Carga de Datos
+
+Los datos de las vacas a transportar se encuentran en el archivo `ps1_cow_data.txt`. Cada línea del archivo contiene el nombre de una vaca y su peso en toneladas, separados por una coma. Todas las vacas tienen nombres únicos.
+
+Para cargar los datos de las vacas, utilizamos la siguiente función:
+
+```python
+def load_cows(filename):
+    """
+    Read the contents of the given file.  Assumes the file contents contain
+    data in the form of comma-separated cow name, weight pairs, and return a
+    dictionary containing cow names as keys and corresponding weights as values.
+
+    Parameters:
+    filename - the name of the data file as a string
+
+    Returns:
+    a dictionary of cow name (string), weight (int) pairs
+    """
+    cow_dict = dict()
+
+    f = open(filename, 'r')
+    
+    for line in f:
+        line_data = line.split(',')
+        cow_dict[line_data[0]] = int(line_data[1])
+    return cow_dict
+```
+
+Esta función lee el contenido del archivo especificado, asumiendo que cada línea contiene el nombre de una vaca y su peso separados por una coma. Devuelve un diccionario donde las claves son los nombres de las vacas y los valores son sus respectivos pesos.
+
+## Algoritmo Voraz (Greedy Algorithm)
+El primer enfoque para resolver el problema es utilizar un algoritmo voraz. La idea es seleccionar las vacas más pesadas que puedan caber en la nave espacial en cada viaje, hasta que todas las vacas hayan sido transportadas.
+
+Aquí está la implementación del algoritmo voraz:
+
+```python
+def greedy_cow_transport(cows, limit=10):
+    trips = []
+    sorted_cows = sorted(cows.items(), key=lambda x: x[1], reverse=True)
+    
+    while sorted_cows:
+        trip = []
+        trip_weight = 0
+        
+        for cow, weight in sorted_cows:
+            if trip_weight + weight <= limit:
+                trip.append(cow)
+                trip_weight += weight
+        
+        trips.append(trip)
+        sorted_cows = [(cow, weight) for cow, weight in sorted_cows if cow not in trip]
+    
+    return trips
+```
+
+El algoritmo voraz funciona de la siguiente manera:
+
+1. Ordena las vacas por peso de mayor a menor.
+2. Mientras haya vacas disponibles, crea un nuevo viaje.
+3. Para cada vaca, verifica si se puede agregar al viaje actual sin exceder el límite de peso. Si es posible, agrega la vaca al viaje.
+4. Una vez que no se puedan agregar más vacas al viaje actual, agrega el viaje a la lista de viajes y elimina las vacas transportadas de la lista de vacas disponibles.
+5. Repite los pasos 2-4 hasta que todas las vacas hayan sido transportadas.
+
+El algoritmo devuelve una lista de viajes, donde cada viaje es representado por una lista de nombres de vacas.
+
+## Algoritmo de Fuerza Bruta (Brute Force Algorithm)
+El segundo enfoque es utilizar un algoritmo de fuerza bruta. Este algoritmo genera todas las posibles combinaciones de viajes y selecciona la combinación que minimiza el número total de viajes necesarios.
+
+Aquí está la implementación del algoritmo de fuerza bruta:
+
+```python
+def brute_force_cow_transport(cows, limit=10):
+    min_trips = None
+    best_partition = None
+
+    for partition in get_partitions(cows.keys()):
+        trips = []
+        for trip_cows in partition:
+            trip_weight = sum(cows[cow] for cow in trip_cows)
+            if trip_weight <= limit:
+                trips.append(trip_cows)
+            else:
+                break
+
+        if len(trips) == len(partition) and (min_trips is None or len(trips) < min_trips):
+            min_trips = len(trips)
+            best_partition = trips
+
+    return best_partition
+````
+El algoritmo de fuerza bruta utiliza la función `get_partitions` para generar todas las posibles particiones de las vacas. Para cada partición, verifica si cada grupo de vacas cumple con el límite de peso. Si todos los grupos son válidos y la cantidad de viajes es menor que la mejor solución encontrada hasta el momento, se actualiza la mejor solución.
+
+El algoritmo devuelve la mejor combinación de viajes encontrada.
+
+## Comparación de Algoritmos
+
+Para comparar el rendimiento de los algoritmos voraz y de fuerza bruta, implementamos la siguiente función:
+
+```python
+def compare_cow_transport_algorithms():
+    cows = load_cows("ps1_cow_data.txt")
+    limit = 10
+
+    print("Greedy Algorithm:")
+    start = time.time()
+    greedy_trips = greedy_cow_transport(cows, limit)
+    end = time.time()
+    print("  Number of trips:", len(greedy_trips))
+    print("  Time taken:", end - start, "seconds")
+
+    print("Brute Force Algorithm:")
+    start = time.time()
+    brute_force_trips = brute_force_cow_transport(cows, limit)
+    end = time.time()
+    print("  Number of trips:", len(brute_force_trips))
+    print("  Time taken:", end - start, "seconds")
+```
+Esta función carga los datos de las vacas, establece un límite de peso de 10 y ejecuta ambos algoritmos. Para cada algoritmo, mide el tiempo de ejecución utilizando la función `time.time()` y muestra el número de viajes encontrados y el tiempo total de ejecución.
+
+## Conclusiones
+En este apunte, hemos explorado dos enfoques para resolver el problema de transportar vacas espaciales: el algoritmo voraz y el algoritmo de fuerza bruta.
+
+El algoritmo voraz es eficiente y rápido, ya que toma decisiones localmente óptimas en cada paso. Sin embargo, no garantiza encontrar la solución óptima global.
+
+Por otro lado, el algoritmo de fuerza bruta genera y evalúa todas las posibles combinaciones de viajes, lo que garantiza encontrar la solución óptima. Sin embargo, puede ser computacionalmente costoso para un gran número de vacas.
+
+La elección del algoritmo adecuado depende del tamaño del problema y de los requisitos de tiempo y calidad de la solución. En situaciones donde se requiere una solución rápida y aproximada, el algoritmo voraz puede ser una buena opción. Si se necesita encontrar la solución óptima y el tamaño del problema es manejable, el algoritmo de fuerza bruta puede ser preferible.
+
+En resumen, este apunte ha cubierto el problema de transporte de vacas espaciales, presentando dos enfoques algorítmicos y comparando su rendimiento. Esperamos que estos conceptos y técnicas sean útiles para abordar problemas similares de optimización en el futuro.
